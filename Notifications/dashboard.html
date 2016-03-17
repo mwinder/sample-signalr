@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+
+    <script src="/Scripts/jquery-1.6.4.js"></script>
+    <script src="/Scripts/jquery.signalR-2.2.0.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script>
+        var matchHub = $.connection.matchHub;
+
+        matchHub.client.goalScored = function (team, player) {
+            console.debug(player + ' scored for ' + team);
+        }
+
+        matchHub.client.yellowCard = function(event) {
+            console.debug(event.Player + ' was given a yellow card');
+        }
+
+        matchHub.client.handle = function(event) {
+            console.info(event);
+        }
+
+        $.connection.hub.start().then(function () {
+            console.info('Notifications: Transport =>', $.connection.hub.transport.name);
+        });
+
+    </script>
+</body>
+</html>
